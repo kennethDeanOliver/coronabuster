@@ -12,16 +12,13 @@ export default class FallingObject extends
         this.setActive(true)
         this.setVisible(true)
     }
-    die() {
-        this.destroy()
-    }
     update(time) {
         this.setVelocityY(this.speed)
         this.rotation += this.rotationVal
 
         const gameHeight = this.scene.scale.height
         if (this.y > gameHeight + 5) {
-            this.die()
+
         }
     }
 }

@@ -21,6 +21,12 @@ export default class CoronaBusterScene extends
 
         this.lasers = undefined
         this.lastFired = 10
+
+        this.scoreLabel = undefined
+        this.score= 0
+
+        this.lifeLabel = undefined
+        this.life = 3
     }
     preload() {
         this.load.image('background', 'images/bg_layer1.png')
@@ -78,6 +84,26 @@ export default class CoronaBusterScene extends
             maxSize: 10,
             runChildUpdate: true
         })
+
+        this.scoreLabel = this.add.text(10,10,'Score', {
+            fontSize: '16px',
+            fill: 'black',
+            backgroundColor: 'white'
+        }).setDepth(1)
+
+        this.lifeLabel = this.add.text(10, 20, 'Life', {
+            fontSize: '16px'
+            fill: 'black',
+            backgroundColor: 'white'
+        }).setDepth(1)
+
+        this.physics.add.overlap(
+            this.player,
+            this.enemies,
+            this.decreaseLife,
+            null,
+            this
+        )
     }
     update(time) {
         // but the clouds refused
@@ -93,6 +119,10 @@ export default class CoronaBusterScene extends
         //     })
 
         this.movePlayer(this.player, time)
+
+        this.scoreLabel.setText('Score : ' + this.score);
+
+        this.lifeLabel.setText('Life: ' + this.life)
     }
     createButton() {
         this.input.addPointer(3)
@@ -177,6 +207,29 @@ export default class CoronaBusterScene extends
             enemy.spawn(positionX)
         }
     }
+    hitEnemy(laser, enemy) {
+        laser.die()
+        enemy.die()
+        this.score += 10;
+    }
+    decreaseLife(player, enemy){
+        enemy.die()
+        this.life--
+        if (this.life == 2){
+            player.setTint(0xff0000)
+        }else if (this.life == 1){
+            player.setTint(0xff0000).setAlpha(0.2)
+        }else if (this.life == 0) {
+            this.scene.start('over-scene',{score:this.score})
+        }
+    }
 }
 
-//this is indeed a comment
+//branching out:
+//git branch [insert name]
+//git checkout [insert name]
+
+//loading:
+//git add .
+//git commit -m "[message]"
+//git push origin [insert name]

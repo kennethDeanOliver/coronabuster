@@ -85,24 +85,17 @@ export default class CoronaBusterScene extends
             runChildUpdate: true
         })
 
-        this.scoreLabel = this.add.text(10,10,'Score', {
-            fontSize: '16px',
-            backgroundColor: 'white'
-        }).setDepth(1)
-
-        this.lifeLabel = this.add.text(10, 20, 'Life', {
-            fontSize: '16px',
-            backgroundColor: 'white'
-        }).setDepth(1)
-
-        this.physics.add.overlap(
-            this.player,
-            this.enemies,
-            this.decreaseLife,
-            null,
-            this
-        )
+        this.physics.add.collider(this.lasers, this.enemies, this.hitEnemy, null, this);
     }
+
+    hitEnemy(laser, enemy) {
+        // Menghancurkan objek laser yang terkena
+        laser.destroy();
+
+        // Menghancurkan objek musuh yang terkena (anda perlu menyesuaikan ini dengan kelas dan logika permainan Anda)
+        enemy.destroy();
+    }
+
     update(time) {
         // but the clouds refused
         // this.clouds.children.iterate((child) =>{
@@ -117,10 +110,6 @@ export default class CoronaBusterScene extends
         //     })
 
         this.movePlayer(this.player, time)
-
-        this.scoreLabel.setText('Score : ' + this.score);
-
-        this.lifeLabel.setText('Life: ' + this.life)
     }
     createButton() {
         this.input.addPointer(3)
@@ -205,11 +194,11 @@ export default class CoronaBusterScene extends
             enemy.spawn(positionX)
         }
     }
-    hitEnemy(laser, enemy) {
-        laser.die()
-        enemy.die()
-        this.score += 10;
-    }
+    // hitEnemy(laser, enemy) {
+    //     laser.die()
+    //     enemy.die()
+    //     this.score += 10;
+    // }
     decreaseLife(player, enemy){
         enemy.die()
         this.life--

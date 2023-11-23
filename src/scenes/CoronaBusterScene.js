@@ -78,7 +78,18 @@ export default class CoronaBusterScene extends
             maxSize: 10,
             runChildUpdate: true
         })
+
+        this.physics.add.collider(this.lasers, this.enemies, this.hitEnemy, null, this);
     }
+
+    hitEnemy(laser, enemy) {
+        // Menghancurkan objek laser yang terkena
+        laser.destroy();
+
+        // Menghancurkan objek musuh yang terkena (anda perlu menyesuaikan ini dengan kelas dan logika permainan Anda)
+        enemy.destroy();
+    }
+
     update(time) {
         // but the clouds refused
         // this.clouds.children.iterate((child) =>{
@@ -93,6 +104,8 @@ export default class CoronaBusterScene extends
         //     })
 
         this.movePlayer(this.player, time)
+
+        this.physics.overlap(this.lasers, this.enemies, this.hitEnemy, null, this);
     }
     createButton() {
         this.input.addPointer(3)

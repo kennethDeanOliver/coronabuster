@@ -21,4 +21,7 @@ export default class FallingObject extends
 
         }
     }
+    die() {
+        this.destroy()
+    }
 }

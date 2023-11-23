@@ -87,13 +87,11 @@ export default class CoronaBusterScene extends
 
         this.scoreLabel = this.add.text(10,10,'Score', {
             fontSize: '16px',
-            fill: 'black',
             backgroundColor: 'white'
         }).setDepth(1)
 
         this.lifeLabel = this.add.text(10, 20, 'Life', {
-            fontSize: '16px'
-            fill: 'black',
+            fontSize: '16px',
             backgroundColor: 'white'
         }).setDepth(1)
 
